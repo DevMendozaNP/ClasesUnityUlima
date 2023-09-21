@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BallMovement : MonoBehaviour
 {
@@ -11,6 +12,30 @@ public class BallMovement : MonoBehaviour
     public float MinSpeedY = -4f;
 
     public float MaxSpeedY = 4f;
+
+    public GameManagerPong GameManager;
+
+    private void Start()
+    {
+        //Inscribir como Observador
+        GameManager.OnPauseGame += Pause;
+        GameManager.OnRestartGame += Restart;
+    }
+
+    private void Restart()
+    {
+        transform.position = new Vector3(
+                0f,
+                0f,
+                0f
+        );
+        speedX = -4f;
+    }
+    private void Pause()
+    {
+        speedX = 0f;
+        speedY = 0f;
+    }
 
     private void Update()
     {
@@ -34,6 +59,13 @@ public class BallMovement : MonoBehaviour
             speedY = speedY * -1;
         }else if (other.transform.CompareTag("Arcos"))
         {
+            if (other.transform.name == "ArcoIzquierda")
+            {
+                GameManager.Goal(1); //Gol de la derecha
+            }else
+            {
+                GameManager.Goal(0); //Gol de la izquierda
+            }
             transform.position = new Vector3(
                 0f,
                 0f,

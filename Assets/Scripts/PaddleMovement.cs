@@ -27,5 +27,6 @@ public class PaddleMovement : MonoBehaviour
         //Se va a repetir más veces el movimiento
         //Pero va a recorrer menos espacio
         transform.position = newPos; //Actualizamos la posisión
+
     }
 }
